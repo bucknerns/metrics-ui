@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+        <link rel="stylesheet" href="mycss.css">
+        <script src="appModule.js"></script>
+        <div data-load="navbar.html"></div>
+    </head>
+    <body>
+        <title>Tests</title>
+        <div ng-app='myApp' ng-controller='apiControler' class="ng-scope">
+            <div style="height: 0px;">
+                <h2>Scroll Down to load more</h2>
+                <div infinite-scroll='tests.nextPage()' infinite-scroll-disabled='tests.busy' infinite-scroll-distance='1' >
+                    <table class="agg-table-paginated">
+                        <tr>
+                            <td ng-repeat="item in ['test_name', 'status', 'run_id', 'start_time', 'stop_time', 'test_id']" class='text'>{{ item }}</td>
+                        </tr>
+                        <tr ng-repeat='item in tests.items' >
+                            <td class='text'>{{item.test_name}}</td>
+                            <td class='text'>{{item.status}}</td>
+                            <td class='text'>{{item.run_id}}</td>
+                            <td class='text'>{{item.start_time}}</td>
+                            <td class='text'>{{item.stop_time}}</td>
+                            <td class='text'>{{item.test_id}}</td>
+                            <td class='text'>{{item.metadata}}</td>
+                        </tr>
+                    </table>
+                    <div ng-show='tests.busy'>Loading data...</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

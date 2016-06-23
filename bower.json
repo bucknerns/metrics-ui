@@ -1,0 +1,21 @@
+{
+  "name": "ui",
+  "authors": [
+    "Nathan Buckner <bucknerns@gmail.com>",
+    "Michael Jackson <michael.jackson@rackspace.com>"
+  ],
+  "description": "Metrics UI",
+  "license": "Apache-2.0",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.5.7",
+    "bootstrap": "^3.3.6",
+    "ngInfiniteScroll": "^1.2.2"
+  },
+  "main": ""
+}
