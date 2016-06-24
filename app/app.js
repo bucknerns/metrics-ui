@@ -1,4 +1,4 @@
-var MetricsApp = angular.module("MetricsApp", ["infinite-scroll"]);
+var metricsUI = angular.module("metricsUI", ["infinite-scroll"]);
 
 /* I am also tossing one off javascript in here*/
 
@@ -14,7 +14,7 @@ $(function(){
     });
 })
 
-MetricsApp.directive("navigation", function() {
+metricsUI.directive("navigation", function() {
    return {
        restrict: 'AE',
        templateUrl: 'directives/navigation.html',
@@ -22,7 +22,7 @@ MetricsApp.directive("navigation", function() {
    }
 });
 
-MetricsApp.directive("sidebar", function() {
+metricsUI.directive("sidebar", function() {
    return {
        restrict: 'AE',
        templateUrl: 'directives/sidebar.html',

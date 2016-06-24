@@ -1,4 +1,4 @@
-MetricsApp.controller("ApiControler", function($scope, Tests) {
+metricsUI.controller("ApiControler", function($scope, Tests) {
   $scope.tests = new Tests()
   /*$scope.run_tests = new RunTests()
   $scope.runs = new Runs()
@@ -9,7 +9,7 @@ MetricsApp.controller("ApiControler", function($scope, Tests) {
 })
 
 
-MetricsApp.factory("Tests", function($http) {
+metricsUI.factory("Tests", function($http) {
     var Tests = function() {
         this.items = []
         this.busy = false
