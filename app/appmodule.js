@@ -13,3 +13,19 @@ $(function(){
         $(this).load($(this).data("load"), function(){});
     });
 })
+
+MetricsApp.directive("navigation", function() {
+   return {
+       restrict: 'AE',
+       templateUrl: 'directives/navigation.html',
+       replace: true
+   }
+});
+
+MetricsApp.directive("sidebar", function() {
+   return {
+       restrict: 'AE',
+       templateUrl: 'directives/sidebar.html',
+       replace: true
+   }
+});
