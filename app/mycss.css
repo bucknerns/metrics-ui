@@ -1,10 +1,43 @@
-
-table {
-    white-space: nowrap;
+.table_headers {
+    background-color: #DDD;
+}
+body {
+    padding-top: 40px;
+}
+.page_content {
+    padding-top: 40px;
+}
+.color-red {
+    background-color: #d9534f;
+    border-color: black;
+    color: black;
+}
+.color-blue {
+    background-color: #f0ad4e;
+    border-color: black;
+    color: black;
+}
+.color-green {
+    background-color: #5cb85c;
+    border-color: black;
+    color: black;
 }
 
-table, th, td {
-    border: 1px solid black;
-    padding: 5px;
+
+a.nocolor:active {
+    color: #000000;
+    text-decoration: none;
 }
 
+a.nocolor:link {
+    color: #000000;
+    text-decoration: none;
+}
+a.nocolor:visited {
+    color:#000000;
+    text-decoration: none;
+}
+a.nocolor:hover {
+    color:#000000;
+    text-decoration: none;
+}
