@@ -4,6 +4,7 @@ metricsUI.service("Runs", function($http) {
         this.busy = false
         this.show = false
         this.page = 1
+        this.limit = 30
         this.base_url = "http://127.0.0.1/api"
         this.metadata = ""
         this.status = ""
@@ -13,8 +14,11 @@ metricsUI.service("Runs", function($http) {
         if (this.busy) return
         this.busy = true
         this.show = true
-        var url = this.base_url + "/runs?limit=30&page=" + this.page + this.metadata + "&jsonp=JSON_CALLBACK"
-
+        var url = this.base_url + "/runs?jsonp=JSON_CALLBACK"
+        url += "&page=" + this.page
+        url += "&limit=" + this.limit
+        if (this.status) {url += "&status=" + this.status}
+        if (this.metadata) {url += this.metadata}
         $http.jsonp(url).success(function(data) {
             if (Object.keys(data).length < 1) {
                 this.show = false
@@ -46,8 +50,9 @@ metricsUI.service("Runs", function($http) {
     this.change_status = function( status ) {
         metadata = this.metadata
         this.init()
-        this.status = "&status=" + value
         this.metadata = metadata
+        this.status = status
+
     }
     this.init()
 })
