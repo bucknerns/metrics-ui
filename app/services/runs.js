@@ -8,6 +8,7 @@ metricsUI.service("Runs", function($http) {
         this.base_url = "http://127.0.0.1/api"
         this.metadata = ""
         this.status = ""
+        this.run = {}
     }
 
     this.next_page = function() {
@@ -35,7 +36,11 @@ metricsUI.service("Runs", function($http) {
 
     this.get_run_by_id = function( run_id ) {
         var url = this.base_url + "/runs/" + run_id + "?jsonp=JSON_CALLBACK"
-        $http.jsonp(url).success(function(data) {return data})
+        $http.jsonp(url).success(function(data) {this.run = data}.bind(this))
+    }
+
+    this.get_run_by_index = function( index ) {
+        this.run = this.items[index]
     }
 
     this.change_metadata = function( metadata ) {
