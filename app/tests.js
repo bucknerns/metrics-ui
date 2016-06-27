@@ -1,5 +1,7 @@
-metricsUI.controller("ApiControler", function($scope, Tests) {
+
+metricsUI.controller("ApiControler", function($scope, Tests, Metadata) {
   $scope.tests = new Tests()
+  $scope.metadata = new Metadata()
   /*$scope.run_tests = new RunTests()
   $scope.runs = new Runs()
   $scope.run = new Run()
@@ -8,14 +10,13 @@ metricsUI.controller("ApiControler", function($scope, Tests) {
   $scope.stats = new Stats()*/
 })
 
-
 metricsUI.factory("Tests", function($http) {
     var Tests = function() {
         this.items = []
         this.busy = false
         this.show = false
         this.page = 1
-        this.limit=10
+        this.limit=30
         this.base_url = "http://127.0.0.1/api"
         this.metadata = ""
         this.status = ""
@@ -26,13 +27,13 @@ metricsUI.factory("Tests", function($http) {
         this.busy = false
         this.show = false
         this.page = 1
-        this.limit=10
+        this.limit=30
         this.base_url = "http://127.0.0.1/api"
         this.metadata = ""
         this.status = ""
     }
 
-    Tests.prototype.nextPage = function() {
+    Tests.prototype.next_page = function() {
         if (this.busy) return
         this.busy = true
         this.show = true
@@ -58,19 +59,22 @@ metricsUI.factory("Tests", function($http) {
     }
 
     Tests.prototype.change_metadata = function( metadata ) {
+        status = this.status
         this.reinit()
+        this.status = status
         angular.forEach(metadata, function(value, key){
             this.metadata = this.metadata + "&" + key + "=" + value
         }.bind(this))
     }
 
     Tests.prototype.change_status = function( status ) {
+        metadata = this.metadata
         this.reinit()
         this.status = "&status=" + value
+        this.metadata = metadata
     }
 
 
   return Tests
 })
-
 

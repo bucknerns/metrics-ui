@@ -8,11 +8,6 @@ Example: <div data-load="navbar.html"></div> will insert the contents of
 navbar.html into the content of the div tag
 */
 
-$(function(){
-    $("[data-load]").each(function(){
-        $(this).load($(this).data("load"), function(){});
-    });
-})
 
 metricsUI.directive("navigation", function() {
    return {
@@ -28,4 +23,19 @@ metricsUI.directive("sidebar", function() {
        templateUrl: 'directives/sidebar.html',
        replace: true
    }
+});
+
+
+metricsUI.directive('onEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.myEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
 });
