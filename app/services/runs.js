@@ -1,4 +1,4 @@
-metricsUI.service("Tests", function($http) {
+metricsUI.service("Runs", function($http) {
     this.init = function() {
         this.items = []
         this.busy = false
@@ -13,7 +13,7 @@ metricsUI.service("Tests", function($http) {
         if (this.busy) return
         this.busy = true
         this.show = true
-        var url = this.base_url + "/tests?limit=30&page=" + this.page + this.metadata + "&jsonp=JSON_CALLBACK"
+        var url = this.base_url + "/runs?limit=30&page=" + this.page + this.metadata + "&jsonp=JSON_CALLBACK"
 
         $http.jsonp(url).success(function(data) {
             if (Object.keys(data).length < 1) {
@@ -29,8 +29,8 @@ metricsUI.service("Tests", function($http) {
         }.bind(this))
     }
 
-    this.get_test_by_id = function( test_id ) {
-        var url = this.base_url + "/tests/" + test_id + "?jsonp=JSON_CALLBACK"
+    this.get_run_by_id = function( run_id ) {
+        var url = this.base_url + "/runs/" + run_id + "?jsonp=JSON_CALLBACK"
         $http.jsonp(url).success(function(data) {return data})
     }
 

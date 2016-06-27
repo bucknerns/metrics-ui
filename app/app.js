@@ -8,15 +8,15 @@ Example: <div data-load="navbar.html"></div> will insert the contents of
 navbar.html into the content of the div tag
 */
 
-metricsUI.controller("ApiControler", function($scope, Tests, Metadata) {
+metricsUI.controller("ApiControler", function($scope, Tests, Metadata, Runs) {
   $scope.tests = Tests
   $scope.metadata = Metadata
-  /*$scope.run_tests = new RunTests()
-  $scope.runs = new Runs()
-  $scope.run = new Run()
-  $scope.attachments = new Attachments()
-  $scope.filters = new Filters()
-  $scope.stats = new Stats()*/
+  $scope.runs = Runs
+
+  /*$
+    $scope.attachments = Attachments
+  $scope.filters = Filters
+  */
 })
 
 metricsUI.directive("navigation", function() {
