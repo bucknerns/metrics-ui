@@ -23,6 +23,10 @@ body {
     color: black;
 }
 
+a.nocolor {
+   color: #000000;
+   text-decoration: none;
+}
 
 a.nocolor:active {
     color: #000000;

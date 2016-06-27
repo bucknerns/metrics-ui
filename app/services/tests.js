@@ -1,17 +1,5 @@
-
-metricsUI.controller("ApiControler", function($scope, Tests, Metadata) {
-  $scope.tests = new Tests()
-  $scope.metadata = new Metadata()
-  /*$scope.run_tests = new RunTests()
-  $scope.runs = new Runs()
-  $scope.run = new Run()
-  $scope.attachments = new Attachments()
-  $scope.filters = new Filters()
-  $scope.stats = new Stats()*/
-})
-
-metricsUI.factory("Tests", function($http) {
-    var Tests = function() {
+metricsUI.service("Tests", function($http) {
+    this.reinit = function() {
         this.items = []
         this.busy = false
         this.show = false
@@ -22,18 +10,7 @@ metricsUI.factory("Tests", function($http) {
         this.status = ""
     }
 
-    Tests.prototype.reinit = function() {
-        this.items = []
-        this.busy = false
-        this.show = false
-        this.page = 1
-        this.limit=30
-        this.base_url = "http://127.0.0.1/api"
-        this.metadata = ""
-        this.status = ""
-    }
-
-    Tests.prototype.next_page = function() {
+    this.next_page = function() {
         if (this.busy) return
         this.busy = true
         this.show = true
@@ -53,12 +30,12 @@ metricsUI.factory("Tests", function($http) {
         }.bind(this))
     }
 
-    Tests.prototype.get_test_by_id = function( test_id ) {
+    this.get_test_by_id = function( test_id ) {
         var url = this.base_url + "/tests/" + test_id + "?jsonp=JSON_CALLBACK"
         $http.jsonp(url).success(function(data) {return data})
     }
 
-    Tests.prototype.change_metadata = function( metadata ) {
+    this.change_metadata = function( metadata ) {
         status = this.status
         this.reinit()
         this.status = status
@@ -67,14 +44,11 @@ metricsUI.factory("Tests", function($http) {
         }.bind(this))
     }
 
-    Tests.prototype.change_status = function( status ) {
+    this.change_status = function( status ) {
         metadata = this.metadata
         this.reinit()
         this.status = "&status=" + value
         this.metadata = metadata
     }
-
-
-  return Tests
 })
 
