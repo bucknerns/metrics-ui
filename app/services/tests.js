@@ -1,5 +1,5 @@
 metricsUI.service("Tests", function($http) {
-    this.reinit = function() {
+    this.init = function() {
         this.items = []
         this.busy = false
         this.show = false
@@ -37,7 +37,7 @@ metricsUI.service("Tests", function($http) {
 
     this.change_metadata = function( metadata ) {
         status = this.status
-        this.reinit()
+        this.init()
         this.status = status
         angular.forEach(metadata, function(value, key){
             this.metadata = this.metadata + "&" + key + "=" + value
@@ -46,9 +46,10 @@ metricsUI.service("Tests", function($http) {
 
     this.change_status = function( status ) {
         metadata = this.metadata
-        this.reinit()
+        this.init()
         this.status = "&status=" + value
         this.metadata = metadata
     }
+    this.init()
 })
 

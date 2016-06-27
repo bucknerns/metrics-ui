@@ -9,7 +9,7 @@ navbar.html into the content of the div tag
 */
 
 metricsUI.controller("ApiControler", function($scope, Tests, Metadata) {
-  $scope.tests = new Tests()
+  $scope.tests = Tests
   $scope.metadata = Metadata
   /*$scope.run_tests = new RunTests()
   $scope.runs = new Runs()
