@@ -1,51 +1,35 @@
-var metricsUI = angular.module("metricsUI", ["infinite-scroll"]);
-
-/* I am also tossing one off javascript in here*/
-
-/*
-Works like templates, inserts a file in the html tag.
-Example: <div data-load="navbar.html"></div> will insert the contents of
-navbar.html into the content of the div tag
-*/
-
-metricsUI.controller("ApiControler", function($scope, Tests, Metadata, Runs) {
-  $scope.tests = Tests
-  $scope.metadata = Metadata
-  $scope.runs = Runs
-
-  /*$
-    $scope.attachments = Attachments
-  $scope.filters = Filters
-  */
+var metricsUI = angular.module("metricsUI", ["infinite-scroll","ngRoute", "ngAnimate"])
+metricsUI.controller("RunsControler", function($scope, Tests, Runs) {
+    $scope.api = $scope.runs = Runs
+    $scope.tests = Tests
+})
+metricsUI.controller("TestsControler", function($scope, Tests, Runs) {
+    $scope.api = $scope.tests = Tests
+    $scope.runs = Runs
 })
 
-metricsUI.directive("navigation", function() {
-   return {
-       restrict: 'AE',
-       templateUrl: 'directives/navigation.html',
-       replace: true
-   }
-});
 
-metricsUI.directive("sidebar", function() {
-   return {
-       restrict: 'AE',
-       templateUrl: 'directives/sidebar.html',
-       replace: true
-   }
-});
-
-
-metricsUI.directive('onEnter', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if(event.which === 13) {
-                scope.$apply(function (){
-                    scope.$eval(attrs.myEnter);
-                });
-
-                event.preventDefault();
-            }
-        });
-    };
-});
+/* Routes*/
+metricsUI.config(function($routeProvider){
+    $routeProvider.when("/", {
+        templateUrl: "templates/filter_list.html",
+        controller: "TestsControler",
+        controllerAs: "app"}
+    ).when("/tests", {
+        templateUrl: "templates/filter_list.html",
+        controller: "TestsControler",
+        controllerAs: "app"}
+    ).when("/runs", {
+        templateUrl: "templates/filter_list.html",
+        controller: "RunsControler",
+        controllerAs: "app"}
+    ).when("/runs/:id", {
+        templateUrl: "templates/run.html",
+        controller: "RunsControler",
+        controllerAs: "app"}
+    ).when("/tests/:id", {
+        templateUrl: "templates/test.html",
+        controller: "TestsControler",
+        controllerAs: "app"}
+    )
+})

@@ -9,42 +9,24 @@
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/metrics_ui.css">
         <link rel="stylesheet" href="css/sidebar.css">
-        <title>Tests</title>
     </head>
-    <body ng-app="metricsUI" ng-controller="ApiControler"  class="container-fluid">
-        <navigation></navigation>
-        <div class="row">
-            <div class="col-sm-3 col-lg-2">
-                <sidebar></sidebar>
-            </div>
-            <div class="col-sm-9 col-lg-10 page_content">
-                <div class="container-fluid" style="height: 300px;">
-                    <div infinite-scroll="tests.next_page()" infinite-scroll-disabled="tests.busy" infinite-scroll-distance="2">
-                        <div class="list-group" >
-                            <div class="list-group-item" ng-repeat="item in tests.items" ng-class="{'color-red': item.status === 'failed', 'color-blue': item.status === 'skipped', 'color-green': item.status === 'passed'}">
-                                <h4 class="list-group-item-heading">
-                                <a herf="#" class="nocolor" >{{item.test_name}}</a>
-                                </h4>
-                                <p class="list-group-item-text">status: {{item.status}}
-                                metadata: {{item.metadata}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-show="tests.show">Loading data...</div>
-                </div>
-            </div>
+    <body ng-app="metricsUI" class="container-fluid">
+        <div ng-include="'templates/navigation.html'"></div>
+        <div class="view-animate-container">
+            <div ng-view class="view-animate, row"></div>
         </div>
     </body>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="bower_components/raphael/raphael.min.js"></script>
     <script src="bower_components/morris.js/morris.min.js"></script>
     <script src="app.js"></script>
     <script src="services/runs.js"></script>
     <script src="services/tests.js"></script>
-    <script src="services/metadata.js"></script>
 </html>
 <!--
 table of tests ... not very user friendly

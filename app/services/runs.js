@@ -1,32 +1,64 @@
-metricsUI.service("Runs", function($http) {
+metricsUI.service("Runs", function($http, $routeParams) {
+    this.attachments = []
+    this.base_url = "http://127.0.0.1/api/runs"
+    this.data = {}
+    this.keys = []
+    this.limit = 30
+    this.list_template = "templates/runs.html"
+    this.metadata = ""
+    this.status = ""
+    this.run = {}
+
     this.init = function() {
-        this.items = []
         this.busy = false
-        this.show = false
+        this.items = []
         this.page = 1
-        this.limit = 30
-        this.base_url = "http://127.0.0.1/api"
-        this.metadata = ""
-        this.status = ""
-        this.run = {}
+        this.show = false
+        this.tests = []
+        if ($routeParams.id){
+            this.statuses = ["all", "passed", "failed", "skipped"]
+        } else {
+            this.statuses = ["all", "passed", "failed"]
+        }
+
+    }
+
+    this.color = function(item) {
+        if ($routeParams.id){
+            return {"color-red": item.status === "failed", "color-blue": item.status === "skipped", "color-green": item.status === "passed"}
+        } else {
+            return {'color-red': item.failed, 'color-green': !item.failed}
+        }
+
     }
 
     this.next_page = function() {
         if (this.busy) return
         this.busy = true
         this.show = true
-        var url = this.base_url + "/runs?jsonp=JSON_CALLBACK"
+        var url = this.base_url
+        if ($routeParams.id){
+             url += "/" + $routeParams.id + "/tests?jsonp=JSON_CALLBACK"
+        } else {
+            url += "?jsonp=JSON_CALLBACK"
+        }
         url += "&page=" + this.page
         url += "&limit=" + this.limit
+        url += this.metadata
         if (this.status) {url += "&status=" + this.status}
-        if (this.metadata) {url += this.metadata}
+
         $http.jsonp(url).success(function(data) {
             if (Object.keys(data).length < 1) {
                 this.show = false
                 return
             }
             angular.forEach(data, function(value, key){
-                this.items.push(value)
+                if ($routeParams.id){
+                    this.tests.push(value)
+                } else {
+                    this.items.push(value)
+                }
+
             }.bind(this))
             this.page = this.page + 1
             this.busy = false
@@ -34,31 +66,69 @@ metricsUI.service("Runs", function($http) {
         }.bind(this))
     }
 
-    this.get_run_by_id = function( run_id ) {
-        var url = this.base_url + "/runs/" + run_id + "?jsonp=JSON_CALLBACK"
+    this.update_item = function() {
+        this.init()
+        this.get_run($routeParams.id)
+        this.get_attachments($routeParams.id)
+        this.next_page()
+    }
+
+    this.get_run = function(id) {
+        if (!$routeParams.id) { return }
+        var url = this.base_url + "/" + id + "?jsonp=JSON_CALLBACK"
         $http.jsonp(url).success(function(data) {this.run = data}.bind(this))
     }
 
-    this.get_run_by_index = function( index ) {
-        this.run = this.items[index]
+    this.get_attachments = function(id) {
+        if (!$routeParams.id) { return }
+        var url = this.base_url + "/" + id + "/attachments?jsonp=JSON_CALLBACK"
+        $http.jsonp(url).success(function(data) {
+            this.attachments = data}.bind(this))
     }
 
-    this.change_metadata = function( metadata ) {
-        status = this.status
+    this.update_metadata = function() {
         this.init()
-        this.status = status
-        angular.forEach(metadata, function(value, key){
+        this.metadata = ""
+        angular.forEach(this.data, function(value, key){
             this.metadata = this.metadata + "&" + key + "=" + value
         }.bind(this))
+        this.next_page()
     }
 
     this.change_status = function( status ) {
-        metadata = this.metadata
         this.init()
-        this.metadata = metadata
-        this.status = status
-
+        if (status == "all") {
+            this.status = ""
+        } else  if (this.statuses.indexOf(status) == -1){
+            this.status = ""
+        } else {
+            this.status = status
+        }
+        this.next_page()
     }
+
+    this.clear_meta = function() {
+        this.keys = []
+        this.data = {}
+        this.update_metadata()
+    }
+
+    this.add_meta_field = function(key, value) {
+        if (this.keys.indexOf(key) == -1){
+            this.keys.push(key)
+        }
+        this.data[key] = value
+        this.update_metadata()
+    }
+
+    this.remove_meta_field = function(key) {
+        index = this.keys.indexOf(key)
+        if ( index != -1){
+            this.keys.splice(index, 1);
+            delete this.data[key]
+        }
+        this.update_metadata()
+    }
+
     this.init()
 })
-
