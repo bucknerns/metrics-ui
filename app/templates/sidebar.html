@@ -15,7 +15,7 @@
                     <tr ng-repeat="k in api.keys">
                         <td style="text-overflow:ellipsis">{{ k }}</td>
                         <td style="text-overflow:ellipsis">{{metadata.data[k]}}</td>
-                        <i ng-class="{'fa fa-times': api.keys > 1}"></i>
+                        <td><a ng-click="api.remove_metadata_field(key)"><i class="fa fa-times"></i></a></td>
                     </tr>
                     <tr>
                         <td><i class="fa fa-key" aria-hidden="true"> <input type="text" ng-model="key" style="width: 100"/></i></td>
