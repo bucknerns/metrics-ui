@@ -1,26 +1,24 @@
 <title>Run</title>
-<div class="row">
-    <div class="col-sm-3 col-lg-2" ng-include="'templates/sidebar.html'"></div>
-    <div class="col-sm-3 col-lg-4 text-center">
-        <div class="panel panel-default">
-            <div class="panel-body" ng-init="api.update_item()">
-                <p ng-repeat='key in ["run_id", "passed", "failed", "skipped", "run_at", "run_time", "metadata"]'>{{ key }} : {{ api.run[key] }} </p>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p ng-repeat="a in api.attachmetns">a</p>
-            </div>
+<div class="col-sm-3 col-lg-2" ng-include="'templates/sidebar.html'"></div>
+<div class="col-sm-3 col-lg-4 text-center">
+    <div class="panel panel-default">
+        <div class="panel-body" ng-init="api.update_item()">
+            <p ng-repeat='key in ["run_id", "passed", "failed", "skipped", "run_at", "run_time", "metadata"]'>{{ key }} : {{ api.run[key] }} </p>
         </div>
     </div>
-    <div class="col-sm-6 col-lg-6 page_content">
-        <div class="container-fluid" style="height: 300px;">
-            <div infinite-scroll="api.next_page()" infinite-scroll-disabled="api.busy" infinite-scroll-distance="2">
-                <div class="list-group" >
-                    <div class="list-group-item" ng-repeat="item in runs.tests" ng-class="api.color(item)" ng-include="tests.list_template"></div>
-                </div>
-            </div>
-            <div ng-show="api.show">Loading data...</div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p ng-repeat="a in api.attachmetns">a</p>
         </div>
+    </div>
+</div>
+<div class="col-sm-6 col-lg-6 page_content">
+    <div class="container-fluid" style="height: 300px;">
+        <div infinite-scroll="api.next_page()" infinite-scroll-disabled="api.busy" infinite-scroll-distance="2">
+            <div class="list-group" >
+                <div class="list-group-item" ng-repeat="item in runs.tests" ng-class="api.color(item)" ng-include="tests.list_template"></div>
+            </div>
+        </div>
+        <div ng-show="api.show">Loading data...</div>
     </div>
 </div>
