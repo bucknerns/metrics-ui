@@ -6,7 +6,7 @@ metricsUI.service("Runs", function($http, $routeParams) {
     this.limit = 30
     this.list_template = "templates/runs.html"
     this.metadata = ""
-    this.status = ""
+    this.status = "all"
     this.run = {}
 
     this.init = function() {
@@ -19,6 +19,10 @@ metricsUI.service("Runs", function($http, $routeParams) {
             this.statuses = ["all", "passed", "failed", "skipped"]
         } else {
             this.statuses = ["all", "passed", "failed"]
+        }
+        if (this.statuses.indexOf(this.status) == -1){
+            this.change_status("all")
+            this.next_page()
         }
 
     }
@@ -45,7 +49,7 @@ metricsUI.service("Runs", function($http, $routeParams) {
         url += "&page=" + this.page
         url += "&limit=" + this.limit
         url += this.metadata
-        if (this.status) {url += "&status=" + this.status}
+        if (this.status != "all") {url += "&status=" + this.status}
 
         $http.jsonp(url).success(function(data) {
             if (Object.keys(data).length < 1) {
@@ -68,6 +72,8 @@ metricsUI.service("Runs", function($http, $routeParams) {
 
     this.update_item = function() {
         this.init()
+        this.change_status("all")
+        this.update_metadata({})
         this.get_run($routeParams.id)
         this.get_attachments($routeParams.id)
         this.next_page()
@@ -97,10 +103,8 @@ metricsUI.service("Runs", function($http, $routeParams) {
 
     this.change_status = function( status ) {
         this.init()
-        if (status == "all") {
-            this.status = ""
-        } else  if (this.statuses.indexOf(status) == -1){
-            this.status = ""
+        if (this.statuses.indexOf(status) == -1){
+            this.status = "all"
         } else {
             this.status = status
         }
@@ -122,6 +126,7 @@ metricsUI.service("Runs", function($http, $routeParams) {
     }
 
     this.remove_meta_field = function(key) {
+        console.log(key)
         index = this.keys.indexOf(key)
         if ( index != -1){
             this.keys.splice(index, 1);

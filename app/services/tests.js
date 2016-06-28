@@ -31,7 +31,7 @@ metricsUI.service("Tests", function($http, $routeParams) {
         url += "&page=" + this.page
         url += "&limit=" + this.limit
         url += this.metadata
-        /*if (this.status) {url += "&status=" + this.status}*/
+        /*if (this.status != "all") {url += "&status=" + this.status}*/
 
         $http.jsonp(url).success(function(data) {
             if (Object.keys(data).length < 1) {
@@ -83,14 +83,11 @@ metricsUI.service("Tests", function($http, $routeParams) {
 
     this.change_status = function( status ) {
         this.init()
-        if (status == "all") {
-            this.status = ""
-        } else  if (this.statuses.indexOf(status) == -1) {
-            this.status = ""
+        if (this.statuses.indexOf(status) == -1){
+            this.status = "all"
         } else {
             this.status = status
         }
-        console.log(this.status)
         this.next_page()
     }
 
@@ -109,6 +106,7 @@ metricsUI.service("Tests", function($http, $routeParams) {
     }
 
     this.remove_meta_field = function(key) {
+        console.log(key)
         index = this.keys.indexOf(key)
         if ( index != -1){
             this.keys.splice(index, 1);

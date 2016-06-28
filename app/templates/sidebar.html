@@ -2,7 +2,7 @@
     <ul class="nav navbar-nav side-nav">
         <li class="sidebar_element">
             <span><i class="fa fa-filter"></i> Status
-                <select class="form-control" ng-model="status" ng-change="api.change_status(status)">
+                <select class="form-control" ng-model="api.status" ng-change="api.change_status(api.status)">
                     <option ng-repeat="s in api.statuses">{{s}}</option>
                 </select>
             </span>
@@ -14,8 +14,8 @@
                     <th><i class="fa fa-list" aria-hidden="true"></i> Value</th>
                     <tr ng-repeat="k in api.keys">
                         <td style="text-overflow:ellipsis">{{ k }}</td>
-                        <td style="text-overflow:ellipsis">{{metadata.data[k]}}</td>
-                        <td><a ng-click="api.remove_metadata_field(key)"><i class="fa fa-times"></i></a></td>
+                        <td style="text-overflow:ellipsis">{{api.data[k]}}</td>
+                        <td><a ng-click="api.remove_meta_field(key)"><i class="fa fa-times"></i></a></td>
                     </tr>
                     <tr>
                         <td><i class="fa fa-key" aria-hidden="true"> <input type="text" ng-model="key" style="width: 100"/></i></td>
@@ -24,8 +24,8 @@
                 </table>
                 <div>
                     <input type="submit" value="Add Filter" ng-click="api.add_meta_field(key, value)">
-                    <input type="button" value="Remove Filter" ng-click="api.remove_metadata_field(key)">
-                    <input type="button" value="Clear" ng-click="api.remove_meta_field()">
+                    <input type="button" value="Remove Filter" ng-click="api.remove_meta_field(key)">
+                    <input type="button" value="Clear" ng-click="api.clear_meta()">
                 </div>
             </form>
         </li>
