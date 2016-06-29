@@ -1,30 +1,32 @@
 <nav id="sidebar" class="navbar navbar-inverse navbar-fixed-side">
     <ul class="nav navbar-nav side-nav">
         <li class="sidebar_element">
-            <span><i class="fa fa-filter"></i> Status
-                <select class="form-control" ng-model="status" ng-change="api.change_status(status)">
-                    <option ng-repeat="s in api.statuses" ng-selected="$index==0">{{s}}</option>
+            <span><i class="fa fa-list" aria-hidden="true"></i> Filter Type
+                <select class="form-control" ng-model="type" ng-change="api.change_type(type)">
+                    <option ng-repeat="s in api.types" ng-selected="$index==0">{{s}}</option>
                 </select>
             </span>
         </li>
         <li class="sidebar_element">
             <form>
                 <table class="table sidebar_element">
-                    <th><i class="fa fa-key" aria-hidden="true"></i> Key</th>
-                    <th><i class="fa fa-list" aria-hidden="true"></i> Value</th>
-                    <tr ng-repeat="k in api.metadata.keys">
-                        <td style="text-overflow:ellipsis">{{ k }}</td>
-                        <td style="text-overflow:ellipsis">{{api.metadata.data[k]}}</td>
-                        <td><a ng-click="api.remove_meta_field(k)"><i class="fa fa-times"></i></a></td>
+                    <th><i class="fa fa-filter" aria-hidden="true"></i> Filter Name</th>
+                    <tr ng-repeat="filter in api.filters">
+                        <td style="text-overflow:ellipsis">{{ filter }}</td>
+                        <td><a ng-click="api.remove_filter(filter)"><i class="fa fa-filter"></i></a></td>
                     </tr>
                     <tr>
-                        <td><i class="fa fa-key" aria-hidden="true"> <input type="text" ng-model="key" style="width: 100"/></i></td>
-                        <td><i class="fa fa-list" aria-hidden="true"> <input type="text" ng-model="value" style="width: 100"/></i></td>
+                        <td><i class="fa fa-filter">
+                            <select class="form-control" ng-model="name">
+                                <option ng-repeat="s in api.all_filters" >{{s}}</option>
+                            </select>
+                        </i></td>
                     </tr>
                 </table>
                 <div>
-                    <input type="submit" value="Add Filter" ng-click="api.add_meta_field(key, value)">
-                    <input type="button" value="Clear" ng-click="api.clear_meta()">
+                {{name}}
+                    <input type="submit" value="Add Filter" ng-click="api.add_filter(name)">
+                    <input type="button" value="Clear" ng-click="api.clear_filters()">
                 </div>
             </form>
         </li>

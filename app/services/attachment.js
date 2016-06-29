@@ -6,11 +6,12 @@ metricsUI.service("Attachment", function($http, $routeParams, MetricsApiService)
     cls.filters = []
     cls.all_filters = []
     cls.types = ["auto", "groupdict", "groups", "match"]
+    cls.type = ""
 
     cls.update = function() {
         cls.get_attachment()
         cls.get_filters()
-        if (cls.filters) {
+        if (cls.filters.length) {
             cls.filter_attachment()
         } else {
             cls.get_content()
@@ -25,7 +26,7 @@ metricsUI.service("Attachment", function($http, $routeParams, MetricsApiService)
     }
 
     cls.get_filters = function() {
-        if (!id) { return }
+        if (!$routeParams.id) { return }
         cls.all_filters = []
         cls.api.get_filters().success(function(data) {
             angular.forEach(data, function(value){cls.all_filters.push(value.name)})
@@ -40,7 +41,10 @@ metricsUI.service("Attachment", function($http, $routeParams, MetricsApiService)
     }
 
     cls.add_filter = function(filter) {
-        cls.filters.push(filter)
+        index = cls.all_filters.indexOf(filter)
+        if ( index != -1){
+            cls.filters.push(filter)
+        }
         cls.update()
     }
 
@@ -49,8 +53,32 @@ metricsUI.service("Attachment", function($http, $routeParams, MetricsApiService)
         cls.update()
     }
 
+    cls.remove_filter = function(filter){
+        index = cls.filters.indexOf(filter)
+        if ( index != -1){
+            cls.filters.splice(index, 1);
+        }
+        cls.update()
+    }
+
     cls.filter_attachment = function() {
         if (!$routeParams.id) { return }
-        cls.api.filter_attachment($routeParams.id, cls.filters).success(function(data) {cls.content = data})
+        cls.content = ""
+        cls.api.filter_attachment($routeParams.id, cls.filters, cls.type).success(function(data) {
+            if (cls.type ==  "match") {
+                angular.forEach(data, function(value){
+                    cls.content += value + "\n"
+                })
+            } else {
+                cls.content = JSON.stringify(data, null, " ")
+            }
+        })
+    }
+
+    cls.change_type = function(type) {
+        cls.type = type
+        if (cls.filters) {
+            cls.update()
+        }
     }
 })

@@ -8,14 +8,14 @@ metricsUI.service("MetricsApiService", function($http) {
     }
 
     this.filter_attachment = function(attachment_id, filters, type) {
-        url = this.url + "/attachments/" + attachment_id + "/filter?jsonp=JSON_CALLBACK"
-        if (type) {url += "&type=" + type}
+        url = this.url + "/attachments/" + attachment_id + "/filter"
+        if (type) {url += "?type=" + type}
         return $http.post(url, filters)
     }
 
     this.get_attachment_content = function(attachment_id) {
         url = this.url + "/attachments/" + attachment_id + "/content"
-        return $http.jsonp(url)
+        return $http.get(url)
     }
 
     this.get_attachment = function(attachment_id) {

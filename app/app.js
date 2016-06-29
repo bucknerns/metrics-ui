@@ -11,7 +11,9 @@ metricsUI.controller("TestsControler", function($scope, Tests) {
 metricsUI.controller("TestControler", function($scope, Test) {
     $scope.api = Test
 })
-
+metricsUI.controller("AttachmentControler", function($scope, Attachment) {
+    $scope.api = Attachment
+})
 
 /* Routes*/
 metricsUI.config(function($routeProvider){
@@ -34,6 +36,10 @@ metricsUI.config(function($routeProvider){
     ).when("/tests/:id", {
         templateUrl: "templates/test.html",
         controller: "TestControler",
+        controllerAs: "app"}
+    ).when("/attachments/:id", {
+        templateUrl: "templates/attachment.html",
+        controller: "AttachmentControler",
         controllerAs: "app"}
     )
 })

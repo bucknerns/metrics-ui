@@ -1,24 +1,14 @@
-<title>Run</title>
+<title>Attachment</title>
 <div class="col-sm-3 col-lg-2" ng-include="'templates/attachment_sidebar.html'"></div>
 <div class="col-sm-3 col-lg-4 text-center">
     <div class="panel panel-default">
-        <div class="panel-body" ng-init="api.change_run()">
-            <p ng-repeat='key in ["attachment_id"]'>{{ key }} : {{ api.attachment[key] }} </p>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p ng-repeat="a in api.attachments">{{a.attachment_id}} {{a.name}} {{a.location}}</p>
+        <div class="panel-body" ng-init="api.update()">
+            <p ng-repeat='key in ["attachment_id", "name", "location"]'  >{{ key }} : {{ api.attachment[key] }} </p>
         </div>
     </div>
 </div>
 <div class="col-sm-6 col-lg-6 page_content">
     <div class="container-fluid" style="height: 300px;">
-        <div infinite-scroll="api.next_page()" infinite-scroll-disabled="api.busy" infinite-scroll-distance="2">
-            <div class="list-group" >
-                <div class="list-group-item" ng-repeat="item in api.items" ng-class="api.color(item)" ng-include="api.list_template"></div>
-            </div>
-        </div>
-        <div ng-show="api.show">Loading data...</div>
+        <p style="white-space: pre-wrap;">{{api.content}}</p>
     </div>
 </div>
