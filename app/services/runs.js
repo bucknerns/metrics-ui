@@ -1,139 +1,69 @@
-metricsUI.service("Runs", function($http, $routeParams) {
-    this.attachments = []
-    this.base_url = "http://127.0.0.1/api/runs"
-    this.data = {}
-    this.keys = []
-    this.limit = 30
-    this.list_template = "templates/runs.html"
-    this.metadata = ""
-    this.status = "all"
-    this.run = {}
+metricsUI.service("Runs", function($http, $routeParams, Metadata, MetricsApiService) {
+    var cls = this
+    cls.api = MetricsApiService
+    cls.metadata = new Metadata()
+    cls.limit = 30
+    cls.list_template = "templates/runs.html"
+    cls.status = "all"
+    cls.statuses = ["all", "passed", "failed"]
 
-    this.init = function() {
-        this.busy = false
-        this.items = []
-        this.page = 1
-        this.show = false
-        this.tests = []
-        if ($routeParams.id){
-            this.statuses = ["all", "passed", "failed", "skipped"]
-        } else {
-            this.statuses = ["all", "passed", "failed"]
-        }
-        if (this.statuses.indexOf(this.status) == -1){
-            this.change_status("all")
-            this.next_page()
-        }
-
+    cls.init = function() {
+        cls.busy = false
+        cls.items = []
+        cls.page = 1
+        cls.show = false
     }
 
-    this.color = function(item) {
-        if ($routeParams.id){
-            return {"color-red": item.status === "failed", "color-blue": item.status === "skipped", "color-green": item.status === "passed"}
-        } else {
-            return {'color-red': item.failed, 'color-green': !item.failed}
-        }
-
+    cls.color = function(item) {
+        return {'color-red': item.failed, 'color-green': !item.failed}
     }
 
-    this.next_page = function() {
-        if (this.busy) return
-        this.busy = true
-        this.show = true
-        var url = this.base_url
-        if ($routeParams.id){
-             url += "/" + $routeParams.id + "/tests?jsonp=JSON_CALLBACK"
+    cls.next_page = function() {
+        if (cls.busy) return
+        cls.busy = true
+        cls.show = true
+        if ((cls.statuses.indexOf(cls.status) == -1) || (cls.status == "all")){
+            status = ""
         } else {
-            url += "?jsonp=JSON_CALLBACK"
+            status = cls.status
         }
-        url += "&page=" + this.page
-        url += "&limit=" + this.limit
-        url += this.metadata
-        if (this.status != "all") {url += "&status=" + this.status}
 
-        $http.jsonp(url).success(function(data) {
+        cls.api.get_runs(status, cls.page, cls.limit, cls.metadata.data).success(function(data) {
             if (Object.keys(data).length < 1) {
-                this.show = false
+                cls.show = false
                 return
             }
-            angular.forEach(data, function(value, key){
-                if ($routeParams.id){
-                    this.tests.push(value)
-                } else {
-                    this.items.push(value)
-                }
-
-            }.bind(this))
-            this.page = this.page + 1
-            this.busy = false
-            this.show = false
-        }.bind(this))
+            angular.forEach(data, function(value, key){cls.items.push(value)})
+            cls.page = cls.page + 1
+            cls.busy = false
+            cls.show = false
+        })
     }
 
-    this.update_item = function() {
-        this.init()
-        this.change_status("all")
-        this.update_metadata({})
-        this.get_run($routeParams.id)
-        this.get_attachments($routeParams.id)
-        this.next_page()
+    cls.change_status = function( status ) {
+        cls.status = status
+        cls.update()
     }
 
-    this.get_run = function(id) {
-        if (!$routeParams.id) { return }
-        var url = this.base_url + "/" + id + "?jsonp=JSON_CALLBACK"
-        $http.jsonp(url).success(function(data) {this.run = data}.bind(this))
+    cls.update = function() {
+        cls.init()
+        cls.next_page()
     }
 
-    this.get_attachments = function(id) {
-        if (!$routeParams.id) { return }
-        var url = this.base_url + "/" + id + "/attachments?jsonp=JSON_CALLBACK"
-        $http.jsonp(url).success(function(data) {
-            this.attachments = data}.bind(this))
+    cls.clear_meta = function() {
+        cls.metadata.clear()
+        cls.update()
     }
 
-    this.update_metadata = function() {
-        this.init()
-        this.metadata = ""
-        angular.forEach(this.data, function(value, key){
-            this.metadata = this.metadata + "&" + key + "=" + value
-        }.bind(this))
-        this.next_page()
+    cls.add_meta_field = function(key, value) {
+        cls.metadata.add_field(key, value)
+        cls.update()
     }
 
-    this.change_status = function( status ) {
-        this.init()
-        if (this.statuses.indexOf(status) == -1){
-            this.status = "all"
-        } else {
-            this.status = status
-        }
-        this.next_page()
+    cls.remove_meta_field = function(key) {
+        cls.metadata.remove_field(key)
+        cls.update()
     }
 
-    this.clear_meta = function() {
-        this.keys = []
-        this.data = {}
-        this.update_metadata()
-    }
-
-    this.add_meta_field = function(key, value) {
-        if (this.keys.indexOf(key) == -1){
-            this.keys.push(key)
-        }
-        this.data[key] = value
-        this.update_metadata()
-    }
-
-    this.remove_meta_field = function(key) {
-        console.log(key)
-        index = this.keys.indexOf(key)
-        if ( index != -1){
-            this.keys.splice(index, 1);
-            delete this.data[key]
-        }
-        this.update_metadata()
-    }
-
-    this.init()
+    cls.init()
 })

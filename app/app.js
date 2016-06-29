@@ -1,11 +1,15 @@
 var metricsUI = angular.module("metricsUI", ["infinite-scroll","ngRoute", "ngAnimate"])
-metricsUI.controller("RunsControler", function($scope, Tests, Runs) {
-    $scope.api = $scope.runs = Runs
-    $scope.tests = Tests
+metricsUI.controller("RunsControler", function($scope, Runs) {
+    $scope.api = Runs
 })
-metricsUI.controller("TestsControler", function($scope, Tests, Runs) {
-    $scope.api = $scope.tests = Tests
-    $scope.runs = Runs
+metricsUI.controller("RunControler", function($scope, Run) {
+    $scope.api = Run
+})
+metricsUI.controller("TestsControler", function($scope, Tests) {
+    $scope.api = Tests
+})
+metricsUI.controller("TestControler", function($scope, Test) {
+    $scope.api = Test
 })
 
 
@@ -25,11 +29,11 @@ metricsUI.config(function($routeProvider){
         controllerAs: "app"}
     ).when("/runs/:id", {
         templateUrl: "templates/run.html",
-        controller: "RunsControler",
+        controller: "RunControler",
         controllerAs: "app"}
     ).when("/tests/:id", {
         templateUrl: "templates/test.html",
-        controller: "TestsControler",
+        controller: "TestControler",
         controllerAs: "app"}
     )
 })

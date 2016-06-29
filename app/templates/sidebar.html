@@ -2,8 +2,8 @@
     <ul class="nav navbar-nav side-nav">
         <li class="sidebar_element">
             <span><i class="fa fa-filter"></i> Status
-                <select id="status" class="form-control" ng-model="api.status" ng-change="api.change_status(api.status)">
-                    <option ng-repeat="s in api.statuses">{{s}}</option>
+                <select class="form-control" ng-model="status" ng-change="api.change_status(status)">
+                    <option ng-repeat="s in api.statuses" ng-selected="$index==0">{{s}}</option>
                 </select>
             </span>
         </li>
@@ -12,14 +12,14 @@
                 <table class="table sidebar_element">
                     <th><i class="fa fa-key" aria-hidden="true"></i> Key</th>
                     <th><i class="fa fa-list" aria-hidden="true"></i> Value</th>
-                    <tr ng-repeat="k in api.keys">
+                    <tr ng-repeat="k in api.metadata.keys">
                         <td style="text-overflow:ellipsis">{{ k }}</td>
-                        <td style="text-overflow:ellipsis">{{api.data[k]}}</td>
-                        <td><a ng-click="api.remove_meta_field(key)"><i class="fa fa-times"></i></a></td>
+                        <td style="text-overflow:ellipsis">{{api.metadata.data[k]}}</td>
+                        <td><a ng-click="api.remove_meta_field(k)"><i class="fa fa-times"></i></a></td>
                     </tr>
                     <tr>
-                        <td><i class="fa fa-key" aria-hidden="true"> <input type="text" ng-model="key" style="width: 100;" /></i></td>
-                        <td><i class="fa fa-list" aria-hidden="true"> <input type="text" ng-model="value" style="width: 100;" /></i></td>
+                        <td><i class="fa fa-key" aria-hidden="true"> <input type="text" ng-model="key" style="width: 100"/></i></td>
+                        <td><i class="fa fa-list" aria-hidden="true"> <input type="text" ng-model="value" style="width: 100"/></i></td>
                     </tr>
                 </table>
                 <div>
