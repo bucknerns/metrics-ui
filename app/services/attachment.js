@@ -64,7 +64,13 @@ metricsUI.service("Attachment", function($http, $routeParams, MetricsApiService)
     cls.filter_attachment = function() {
         if (!$routeParams.id) { return }
         cls.content = ""
-        cls.api.filter_attachment($routeParams.id, cls.filters, cls.type).success(function(data) {
+        if (cls.type == "auto") {
+            type = ""
+        } else {
+            type = cls.type
+        }
+
+        cls.api.filter_attachment($routeParams.id, cls.filters, type).success(function(data) {
             if (cls.type ==  "match") {
                 angular.forEach(data, function(value){
                     cls.content += value + "\n"
