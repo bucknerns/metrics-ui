@@ -1,0 +1,7 @@
+#test-name {
+    word-wrap: break-word;
+}
+
+.list-group-item-text {
+    word-wrap: break-word;
+}
