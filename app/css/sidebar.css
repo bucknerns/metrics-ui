@@ -1,9 +1,21 @@
-i {
-    padding: 5px important!;
+form {
+    padding: 10px 10px 15px;
 }
 
 input {
     color: black;
+}
+
+#buttons {
+    text-align: center;
+}
+
+#key {
+    width: 100;
+}
+
+#remove-field {
+  color: #9d9d9d;  
 }
 
 #sidebar {
@@ -15,7 +27,19 @@ input {
     margin: 0 5%;
 }
 
-.sidebar_element {
+#status-header {
+    font-weight: bold;
+}
+
+#value {
+    width: 100;
+}
+
+.current-fields {
+    text-overflow: ellipsis;
+}
+
+.sidebar-element {
     color: #9d9d9d;
     padding-top: 10;
     padding-bottom: 10;
