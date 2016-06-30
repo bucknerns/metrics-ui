@@ -1,26 +1,35 @@
 <nav id="sidebar" class="navbar navbar-inverse navbar-fixed-side">
     <ul class="nav navbar-nav side-nav">
         <li class="sidebar_element">
-            <span><i class="fa fa-list" aria-hidden="true"></i> Filter Type
+            <span>
+                <i class="fa fa-list" aria-hidden="true"></i> Filter Type
                 <select class="form-control" ng-model="type" ng-change="api.change_type(type)">
-                    <option ng-repeat="s in api.types" ng-selected="$index==0">{{s}}</option>
+                    <option ng-repeat="s in api.types" ng-selected="$index==0">{{ s }}</option>
                 </select>
             </span>
         </li>
         <li class="sidebar_element">
             <form>
                 <table class="table sidebar_element">
-                    <th><i class="fa fa-filter" aria-hidden="true"></i> Filter Name</th>
+                    <th>
+                        <i class="fa fa-filter" aria-hidden="true"></i> Filter Name
+                    </th>
                     <tr ng-repeat="filter in api.filters">
                         <td style="text-overflow:ellipsis">{{ filter }}</td>
-                        <td><a ng-click="api.remove_filter(filter)"><i class="fa fa-filter"></i></a></td>
+                        <td>
+                            <a ng-click="api.remove_filter(filter)">
+                                <i class="fa fa-filter"></i>
+                            </a>
+                        </td>
                     </tr>
                     <tr>
-                        <td><i class="fa fa-filter">
-                            <select class="form-control" ng-model="name">
-                                <option ng-repeat="s in api.all_filters" >{{s}}</option>
-                            </select>
-                        </i></td>
+                        <td>
+                            <i class="fa fa-filter">
+                                <select class="form-control" ng-model="name">
+                                    <option ng-repeat="s in api.all_filters" >{{ s }}</option>
+                                </select>
+                            </i>
+                        </td>
                     </tr>
                 </table>
                 <div>
