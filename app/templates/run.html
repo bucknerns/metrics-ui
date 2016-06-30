@@ -1,9 +1,10 @@
-<title>Run</title>
+<title>Individual Test Run</title>
+<link rel="stylesheet" type="text/css" href="../css/run.css">
 <div class="col-sm-3 col-lg-2" ng-include="'templates/sidebar.html'"></div>
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div style="width: 40%; float: left !important;">
+            <div class="column-container">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div ng-init="api.change_run()">
@@ -13,14 +14,14 @@
                             <div ng-repeat="a in api.attachments">{{a.attachment_id}} {{a.name}} {{a.location}}</div>
                         </div>    
                         <div>
-                            <div style="margin: 0 auto;">
+                            <div class="graph">
                                 <iframe src="http://104.239.149.127:443/app/kibana#/dashboard/mj_flashy_dashy?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-60d,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!t),panels:!((col:1,id:pass_fail_by_test_name,panelIndex:1,row:1,size_x:12,size_y:5,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'*')),title:mj_flashy_dashy,uiState:())" height="600" width="625"></iframe>
                             </div>    
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="float: left !important; width: 40%;">
+            <div class="column-container">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div>

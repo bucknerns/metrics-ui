@@ -1,0 +1,23 @@
+.column-container {
+    width: 40%;
+    float: left;
+    border: none;
+}
+
+.graph {
+    padding: 5px;
+}
+
+.left-column {
+    padding: 5px;
+}
+
+/* Adds to Bootstrap "list-group-item" class */
+.list-group-item {
+    word-wrap: break-word;
+}
+
+/* Overrides border property on Bootstrap "panel" class */
+.panel {
+    border: none;
+}
