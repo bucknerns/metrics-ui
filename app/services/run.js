@@ -1,4 +1,4 @@
-metricsUI.service("Run", function($http, $routeParams, Metadata, MetricsApiService) {
+metricsUI.service("Run", function($http, $routeParams, Metadata, MetricsApiService, $sce) {
     var cls = this
     cls.api = MetricsApiService
     cls.metadata = new Metadata()
@@ -8,6 +8,13 @@ metricsUI.service("Run", function($http, $routeParams, Metadata, MetricsApiServi
     cls.statuses = ["all", "passed", "failed", "skipped"]
     cls.attachments = []
     cls.run = {}
+
+    cls.get_graph_url = function() {
+        url = "http://metrics.qe.rackspace.net:443/app/kibana#/visualize/edit/pass_fail_skip_by_test_per_run?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-90d,mode:quick,to:now))&_a=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:metrics,key:query,negate:!f,value:'status:%20passed'),query:(query_string:(analyze_wildcard:!t,query:'status:%20passed')))),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'_type:%20test%20AND%20_parent:%20"
+        url += cls.run.run_id
+        url += "')),uiState:(vis:(colors:(Failed:%23BF1B00,Passed:%23447EBC,passed:%23447EBC))),vis:(aggs:!((id:'1',params:(customLabel:'Total%20Tests'),schema:metric,type:count),(id:'3',params:(filters:!((input:(query:(query_string:(analyze_wildcard:!t,query:'status:%20passed'))),label:passed),(input:(query:(query_string:(analyze_wildcard:!t,query:'status:%20failed'))),label:failed),(input:(query:(query_string:(analyze_wildcard:!t,query:'status:%20skipped'))),label:skipped))),schema:segment,type:filters),(id:'4',params:(field:test_name,order:desc,orderBy:'1',size:0),schema:segment,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,isDonut:!t,shareYAxis:!t),title:pass_fail_skip_by_test_per_run,type:pie))"
+        return $sce.trustAsResourceUrl(url)
+    }
 
     cls.init = function() {
         cls.busy = false
