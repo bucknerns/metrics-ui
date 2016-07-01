@@ -14,7 +14,7 @@
                             <div ng-repeat='key in ["failed", "passed", "run_count", "skipped"]' >{{ key }} : {{ api.stats[key] }}</div>
                         </div>
                         <div>
-                            <div ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</div>
+                            <a href="#/attachments/{{a.attachment_id}}" ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</a>
                         </div>
                         <div>
                             <div class="graph">

@@ -11,7 +11,7 @@
                             <div ng-repeat='key in ["run_id", "passed", "failed", "skipped", "run_at", "run_time", "metadata"]'>{{ key }} : {{ api.run[key] }}</div>
                         </div>
                         <div>
-                            <div ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</div>
+                            <a href="#/attachments/{{a.attachment_id}}" ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</a>
                         </div>
                         <div>
                             <div class="graph">
@@ -34,5 +34,3 @@
         </div>
     </div>
 </div>
-
-
