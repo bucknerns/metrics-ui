@@ -1,27 +1,30 @@
-<title>Test</title>
-<div class="col-lg-4 text-center">
-    <div class="panel panel-default">
-        <div class="panel-body" ng-init="api.update()">
-            <p ng-repeat='key in ["test_name", "test_id", "status", "run_id", "start_time", "stop_time", "metadata"]'>{{ key }} : {{ api.test[key] }} </p>
+<title>Individual Test Run</title>
+<link rel="stylesheet" type="text/css" href="../css/run.css">
+<div class="col-sm-3 col-lg-2" ng-include="'templates/sidebar.html'"></div>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="column-container">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div ng-init="api.update()">
+                            <div ng-repeat='key in ["test_name", "test_id", "status", "run_id", "start_time", "stop_time", "metadata"]'>{{ key }} : {{ api.test[key] }}</div>
+                        </div>
+                        <div>
+                            <div ng-repeat='key in ["failed", "passed", "run_count", "skipped"]' >{{ key }} : {{ api.stats[key] }}</div>
+                        </div>
+                        <div>
+                            <div ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</div>
+                        </div>    
+                        <div>
+                            <div class="graph">
+                                <!-- Test status over time, filtered by test_name -->
+                                <iframe src="http://104.239.149.127:443/app/kibana#/visualize/edit/pass_fail_over_time_by_test_name?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-90d,mode:quick,to:now))&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'_type:%20test%20AND%20test_name:%20test_create_server_response')),uiState:(spy:(mode:(fill:!f,name:!n))),vis:(aggs:!((id:'1',params:(customLabel:'Instance%20Total'),schema:metric,type:count),(id:'2',params:(customInterval:'2h',customLabel:'Day%20of%20run',extended_bounds:(),field:start_time,interval:auto,min_doc_count:1),schema:segment,type:date_histogram),(id:'3',params:(filters:!((input:(query:(query_string:(analyze_wildcard:!t,query:'status:%20passed'))),label:Passing),(input:(query:(query_string:(analyze_wildcard:!t,query:'status:%20failed'))),label:Failing))),schema:group,type:filters),(id:'4',params:(),schema:radius,type:count)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,defaultYExtents:!f,drawLinesBetweenPoints:!t,interpolate:linear,radiusRatio:'7',scale:'square%20root',setYExtents:!f,shareYAxis:!t,showCircles:!t,smoothLines:!f,times:!(),yAxis:()),title:pass_fail_over_time_by_test_name,type:line))" height="600" width="625"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="col-lg-4 text-center">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p ng-repeat='key in ["failed", "passed", "run_count", "skipped"]' >{{ key }} : {{ api.stats[key] }} </p>
-        </div>
-    </div>
-</div>
-<div class="col-lg-4 text-center">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</p>
-        </div>
-    </div>
-</div>
-
-<!--
-Test status over time, filtered by test_name
-<iframe src="http://104.239.149.127:443/app/kibana#/visualize/edit/pass_fail_over_time_by_test_name?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-90d,mode:quick,to:now))&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'_type:%20test%20AND%20test_name:%20test_create_server_response')),uiState:(spy:(mode:(fill:!f,name:!n))),vis:(aggs:!((id:'1',params:(customLabel:'Instance%20Total'),schema:metric,type:count),(id:'2',params:(customInterval:'2h',customLabel:'Day%20of%20run',extended_bounds:(),field:start_time,interval:auto,min_doc_count:1),schema:segment,type:date_histogram),(id:'3',params:(filters:!((input:(query:(query_string:(analyze_wildcard:!t,query:'status:%20passed'))),label:Passing),(input:(query:(query_string:(analyze_wildcard:!t,query:'status:%20failed'))),label:Failing))),schema:group,type:filters),(id:'4',params:(),schema:radius,type:count)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,defaultYExtents:!f,drawLinesBetweenPoints:!t,interpolate:linear,radiusRatio:'7',scale:'square%20root',setYExtents:!f,shareYAxis:!t,showCircles:!t,smoothLines:!f,times:!(),yAxis:()),title:pass_fail_over_time_by_test_name,type:line))" height="600" width="800"></iframe>
- -->
