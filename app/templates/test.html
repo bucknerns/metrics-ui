@@ -1,22 +1,39 @@
-<title>Test</title>
-<div class="col-lg-4 text-center">
-    <div class="panel panel-default">
-        <div class="panel-body" ng-init="api.update()">
-            <p ng-repeat='key in ["test_name", "test_id", "status", "run_id", "start_time", "stop_time", "metadata"]'>{{ key }} : {{ api.test[key] }} </p>
-        </div>
-    </div>
-</div>
-<div class="col-lg-4 text-center">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p ng-repeat='key in ["failed", "passed", "run_count", "skipped"]' >{{ key }} : {{ api.stats[key] }} </p>
-        </div>
-    </div>
-</div>
-<div class="col-lg-4 text-center">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</p>
+<title>Individual Test Run</title>
+<link rel="stylesheet" type="text/css" href="../css/run.css">
+<div class="col-sm-3 col-lg-2" ng-include="'templates/sidebar.html'"></div>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="column-container">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div ng-init="api.update()">
+                            <div ng-repeat='key in ["test_name", "test_id", "status", "run_id", "start_time", "stop_time", "metadata"]'>{{ key }} : {{ api.test[key] }}</div>
+                        </div>
+                        <div>
+                        <div>
+                            <div ng-repeat='key in ["failed", "passed", "run_count", "skipped"]' >{{ key }} : {{ api.stats[key] }}</div>
+                        </div>
+                        <div>
+                            <div ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</div>
+                        </div>    
+                        <div>
+                            <div class="graph">
+                                <iframe src="http://104.239.149.127:443/app/kibana#/dashboard/mj_flashy_dashy?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-60d,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!t),panels:!((col:1,id:pass_fail_by_test_name,panelIndex:1,row:1,size_x:12,size_y:5,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'status:%20failed')),title:mj_flashy_dashy,uiState:())" height="600" width="625"></iframe>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column-container">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <div class="list-group-item" ng-repeat="item in api.items" ng-class="api.color(item)" ng-include="api.list_template"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
         </div>
     </div>
 </div>
