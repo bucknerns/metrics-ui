@@ -1,5 +1,5 @@
 metricsUI.service("MetricsApiService", function($http) {
-    this.url = "http://localhost/api"
+    this.url = "http://metrics.qe.rackspace.net/api"
     this._get_metadata_string = function(metadata) {
         metadata_string = ""
         angular.forEach(metadata, function(value, key){
