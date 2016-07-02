@@ -2,7 +2,7 @@
     <ul class="nav navbar-nav side-nav">
         <li class="sidebar_element">
             <span>
-                <i class="fa fa-list" aria-hidden="true"></i> Filter Type
+                <i class="fa fa-list" aria-hidden="true"></i> <span id="status-header">Filter Type</span>
                 <select id="status" class="form-control" ng-model="type" ng-change="api.change_type(type)">
                     <option ng-repeat="s in api.types" ng-selected="$index==0">{{ s }}</option>
                 </select>
