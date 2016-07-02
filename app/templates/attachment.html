@@ -1,20 +1,16 @@
 <title>Attachment</title>
 <link rel="stylesheet" type="text/css" href="../css/run.css">
 <div class="col-sm-3 col-lg-2" ng-include="'templates/attachment_sidebar.html'"></div>
-<div class="col-sm-3 col-lg-4 text-center">
+<div class="col-sm-9 col-lg-10 page_content">
     <div ng-init="api.update()" class="panel panel-default" style="padding-top: 60">
         <div class="panel-body">
-            <h4 class="list-group-item-heading"><i class="fa fa-paperclip" aria-hidden="true"></i>
-            <a href="#/attachments/{{api.attachment.attachment_id}}">{{ api.attachment.attachment_id }}</a>
-            </h4>
-            <p class="list-group-item-text">
+            <h4 class="list-group-item-heading">
                 Attachment name: {{ api.attachment.name }}<br/>
-                <a href="{{api.attachment.location}}">Download</a>
-            </p>
+            </h4>
+            <i class="fa fa-paperclip" aria-hidden="true"></i>
+            <a href="{{api.attachment.location}}">Download Original</a>
         </div>
     </div>
-</div>
-<div class="col-sm-6 col-lg-6 page_content">
     <div class="container-fluid" style="height: 300px;">
         <p style="white-space: pre-wrap;">{{ api.content }}</p>
     </div>
