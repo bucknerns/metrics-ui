@@ -19,25 +19,24 @@
                                 <a href="{{a.location}}">Download</a>
                             </p>
                         </div>
+                        <div>
+                            <div class="graph">
+                                <!-- Pass/Fail/Skip for every test in a specific run, filtered by _parent (you'll need the run's _id) -->
+                                <iframe ng-src="{{api.get_graph_url()}}" height="600" width="625"></iframe>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="graph">
-                            <!-- Pass/Fail/Skip for every test in a specific run, filtered by _parent (you'll need the run's _id) -->
-                            <iframe ng-src="{{api.get_graph_url()}}" height="600" width="625"></iframe>
+                </div>
+            </div>
+            <div class="column-container">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <div class="list-group-item" ng-repeat="item in api.items" ng-class="api.color(item)" ng-include="api.list_template"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="column-container">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div>
-                        <div class="list-group-item" ng-repeat="item in api.items" ng-class="api.color(item)" ng-include="api.list_template"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 </div>
