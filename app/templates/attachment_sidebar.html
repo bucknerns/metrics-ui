@@ -3,7 +3,7 @@
         <li class="sidebar_element">
             <span>
                 <i class="fa fa-list" aria-hidden="true"></i> Filter Type
-                <select class="form-control" ng-model="type" ng-change="api.change_type(type)">
+                <select id="status" class="form-control" ng-model="type" ng-change="api.change_type(type)">
                     <option ng-repeat="s in api.types" ng-selected="$index==0">{{ s }}</option>
                 </select>
             </span>
