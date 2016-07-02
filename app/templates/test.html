@@ -13,8 +13,14 @@
                         <div>
                             <div ng-repeat='key in ["failed", "passed", "run_count", "skipped"]' >{{ key }} : {{ api.stats[key] }}</div>
                         </div>
-                        <div>
-                            <a href="#/attachments/{{a.attachment_id}}" ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</a>
+                        <div ng-repeat="a in api.attachments">
+                            <h4 class="list-group-item-heading"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                            <a href="#/attachments/{{a.attachment_id}}">{{ a.attachment_id }}</a>
+                            </h4>
+                            <p class="list-group-item-text">
+                                Attachment name: {{ a.name }}<br/>
+                                <a href="{{a.location}}">Download</a>
+                            </p>
                         </div>
                         <div>
                             <div class="graph">

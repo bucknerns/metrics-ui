@@ -1,10 +1,14 @@
 <title>Attachment</title>
 <div class="col-sm-3 col-lg-2" ng-include="'templates/attachment_sidebar.html'"></div>
 <div class="col-sm-3 col-lg-4 text-center">
-    <div class="panel panel-default">
-        <div class="panel-body" ng-init="api.update()">
-            <p ng-repeat='key in ["attachment_id", "name", "location"]'  >{{ key }} : {{ api.attachment[key] }}</p>
-        </div>
+    <div ng-repeat="a in api.attachments">
+        <h4 class="list-group-item-heading"><i class="fa fa-paperclip" aria-hidden="true"></i>
+        <a href="#/attachments/{{a.attachment_id}}">{{ a.attachment_id }}</a>
+        </h4>
+        <p class="list-group-item-text">
+            Attachment name: {{ a.name }}<br/>
+            <a href="{{a.location}}">Download</a>
+        </p>
     </div>
 </div>
 <div class="col-sm-6 col-lg-6 page_content">

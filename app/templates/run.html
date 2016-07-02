@@ -10,27 +10,34 @@
                         <div ng-init="api.change_run()">
                             <div ng-repeat='key in ["run_id", "passed", "failed", "skipped", "run_at", "run_time", "metadata"]'>{{ key }} : {{ api.run[key] }}</div>
                         </div>
-                        <div>
-                            <a href="#/attachments/{{a.attachment_id}}" ng-repeat="a in api.attachments">{{ a.attachment_id }} {{ a.name }} {{ a.location }}</a>
-                        </div>
-                        <div>
-                            <div class="graph">
-                                <!-- Pass/Fail/Skip for every test in a specific run, filtered by _parent (you'll need the run's _id) -->
-                                <iframe ng-src="{{api.get_graph_url()}}" height="600" width="625"></iframe>
-                            </div>
+                        <div ng-repeat="a in api.attachments">
+                            <h4 class="list-group-item-heading"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                            <a href="#/attachments/{{a.attachment_id}}">{{ a.attachment_id }}</a>
+                            </h4>
+                            <p class="list-group-item-text">
+                                Attachment name: {{ a.name }}<br/>
+                                <a href="{{a.location}}">Download</a>
+                            </p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="column-container">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div>
-                            <div class="list-group-item" ng-repeat="item in api.items" ng-class="api.color(item)" ng-include="api.list_template"></div>
+                    <div>
+                        <div class="graph">
+                            <!-- Pass/Fail/Skip for every test in a specific run, filtered by _parent (you'll need the run's _id) -->
+                            <iframe ng-src="{{api.get_graph_url()}}" height="600" width="625"></iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="column-container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <div class="list-group-item" ng-repeat="item in api.items" ng-class="api.color(item)" ng-include="api.list_template"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
